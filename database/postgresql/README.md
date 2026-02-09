@@ -45,7 +45,7 @@ Counting total number of student records
 All database connections use environment variables for credentials and network configuration.
 
 🧾 SQL Queries
-Common SQL operations used by backend services are documented in queries.sql
+Common SQL operations used by backend services are documented in queries.sql.
 
 These include:
 
