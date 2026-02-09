@@ -29,3 +29,36 @@ Returns a JSON response containing:
 - PostgreSQL version
 - Connection latency
 - Timestamp
+
+
+# RDS Health Check Lambda Function
+
+This Lambda function performs real-time health checks on a PostgreSQL
+database hosted on Amazon RDS.
+
+## Purpose
+- Verify database connectivity
+- Measure query latency
+- Validate application data availability
+- Provide serverless monitoring without EC2 dependency
+
+## Function Behavior
+- Connects to RDS using environment variables
+- Executes a lightweight COUNT query
+- Returns database health status and latency
+
+## Environment Variables
+- DB_HOST
+- DB_NAME
+- DB_USER
+- DB_PASSWORD
+- DB_PORT
+
+## Output Example
+```json
+{
+  "status": "healthy",
+  "database": "postgres",
+  "total_students": 3,
+  "latency_seconds": 0.39
+}
