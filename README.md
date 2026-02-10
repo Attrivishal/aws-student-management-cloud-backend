@@ -144,5 +144,5 @@ see:
 
 ## 👤 Author
 **Vishal Attri**  
-Cloud & Backend Enthusiast  
+Cloud Enthusias  
 LinkedIn: https://www.linkedin.com/in/vishalattri/
