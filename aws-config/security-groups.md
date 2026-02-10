@@ -1,30 +1,34 @@
-# Security Group Strategy
+# Security Group Configuration
 
-Security Groups were used as the primary network firewall mechanism
-to control traffic between services.
+I configured separate security groups to tightly control traffic between EC2,
+Lambda, and Amazon RDS.
 
----
+## RDS Security Group
+- Inbound:
+  - PostgreSQL (5432)
+  - Source: EC2 Security Group and Lambda Security Group
+- Outbound:
+  - All traffic (default)
 
-## Database Security Group
+RDS does not allow public access and only accepts connections from trusted
+backend services.
 
-Inbound Rules:
-- PostgreSQL (5432) allowed only from:
-  - EC2 application security group
-  - Lambda function security group
+## EC2 Security Group
+- Inbound:
+  - HTTP (80)
+  - HTTPS (443)
+  - Custom port (5001) for Flask backend
+- Outbound:
+  - PostgreSQL (5432) to RDS
 
-Outbound Rules:
-- Restricted to required destinations only
+## Lambda Security Group
+- Inbound:
+  - Managed internally by AWS
+- Outbound:
+  - PostgreSQL (5432) to RDS
 
----
-
-## Why Security Groups Were Critical
-
-Several connectivity issues (timeouts, refused connections)
-were encountered during development.
-
-Resolving these issues required a clear understanding of:
-- Source vs destination security groups
-- Stateful firewall behavior
-- Inbound vs outbound rule precedence
-
-These lessons are documented in the debugging-notes folder.
+## Outcome
+This setup ensures:
+- Database access is restricted
+- No public traffic reaches RDS
+- Only backend services can communicate with the database

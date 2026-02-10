@@ -1,24 +1,22 @@
 # IAM Roles and Permissions
 
-IAM roles were created to allow AWS services to communicate securely
-without using static credentials.
+I used IAM roles instead of hardcoded credentials to securely grant permissions
+to AWS services.
 
----
+## Lambda Execution Role
+- Permissions:
+  - VPC access (CreateNetworkInterface, DescribeNetworkInterfaces)
+  - CloudWatch Logs (for monitoring)
+- No database credentials stored in code
 
-## Roles Implemented
+## EC2 IAM Role
+- Basic permissions for instance management and logging
+- Database credentials provided using environment variables
 
-### Lambda Execution Role
-- VPC access permissions
-- CloudWatch logging permissions
-- Minimal database access scope
+## Security Practice
+- No AWS credentials are hardcoded
+- Least-privilege access is followed
+- All secrets are managed using environment variables
 
-### API Gateway Logging Role
-- Permission to publish logs to CloudWatch
-- Required to debug integration issues
-
----
-
-## Security Principle
-
-The project strictly follows the **Principle of Least Privilege**:
-each role has only the permissions required to function.
+## Outcome
+This improves security and follows AWS best practices for production systems.

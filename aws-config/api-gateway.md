@@ -1,29 +1,22 @@
 # API Gateway Configuration
 
-Amazon API Gateway was used to expose backend services
-as RESTful HTTP endpoints.
+I used Amazon API Gateway as the public entry point for Lambda-based APIs.
 
----
+## Configuration
+- Type: REST API
+- Methods: GET
+- Integration: AWS Lambda
+- Endpoint: /health
+- Authorization: None (public for testing)
 
-## Responsibilities
+## Flow
+Client → API Gateway → Lambda → RDS → Response
 
-- Route HTTP requests to Lambda functions
-- Handle request/response transformation
-- Provide stage-based deployment (prod)
-- Enable CloudWatch logging
+## Features
+- Handles HTTPS traffic
+- Enables CORS
+- Acts as a secure abstraction layer for Lambda
 
----
-
-## Challenges Faced
-
-During setup, multiple issues were encountered:
-- Missing Authentication Token errors
-- Internal Server Errors with no logs
-- CloudWatch logging misconfiguration
-
-Resolving these required:
-- Proper IAM role attachment
-- Stage redeployment
-- Correct access log destination ARN
-
-These issues reflect real-world cloud debugging scenarios.
+## Outcome
+API Gateway allows external clients to safely access backend functionality
+without exposing internal infrastructure.

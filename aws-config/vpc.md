@@ -1,33 +1,31 @@
-# VPC and Networking Design
+# VPC Configuration
 
-A dedicated Virtual Private Cloud (VPC) was created to isolate
-all backend resources from other AWS workloads.
+I created a custom VPC in the `us-east-1` region to securely isolate all backend
+resources used in this project.
 
----
+## VPC Details
+- Region: us-east-1
+- CIDR Block: 10.0.0.0/16
 
-## Network Structure
+## Subnets
 
-The VPC is divided into multiple subnets:
-
-### Public Subnets
-- EC2 instance hosting the Flask application
-- API Gateway endpoints
-- Internet Gateway attached for outbound access
+### Public Subnet
+- Used for: EC2 instance (Flask backend)
+- Public IP: Enabled
+- Purpose: Allow external HTTP/HTTPS access to backend APIs
 
 ### Private Subnets
-- PostgreSQL RDS instance
-- No direct internet routing
-- Accessible only through security group rules
+- Used for: AWS Lambda functions and Amazon RDS
+- Public IP: Disabled
+- Purpose: Protect database and internal services from direct internet access
 
----
+## Routing
+- Public subnet is connected to an Internet Gateway
+- Private subnets do not have direct internet access
+- Lambda connects to RDS internally inside the VPC
 
-## Why This Matters
-
-Placing the database in a private subnet ensures:
-
-- No accidental public exposure
-- Protection from direct port scanning attacks
-- Access control enforced at the network level
-
-This design mirrors how production-grade backend systems
-are deployed in enterprise environments.
+## Outcome
+This setup ensures that:
+- EC2 can be accessed publicly
+- RDS remains fully private
+- Lambda can securely access the database
