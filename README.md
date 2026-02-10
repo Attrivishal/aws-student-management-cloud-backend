@@ -124,6 +124,24 @@ aws-student-management-cloud-backend/
 - Rate limiting and WAF
 - Frontend integration
 
+## Live Execution Proof 
+
+THis project is fully deployed and tested on AWS. 
+Here are some real screenshots proving live connectivity between API Gateway, AWS Lambda, EC2, and RDS PostgreSQL.
+And all the screenshots are available in the `screenshots/` directory.
+
+## API Testing (Postman)
+
+The API Gateway endpoints were tested using postman to verify real-time connectivity between external clients and backend services.
+
+The Screenshot below demonstrates:
+-> Successful API Gateway invocation
+-> AWS Lambda execution inside VPC
+-> Live Data fetched form PostgreSQL RDS
+
+see:
+`screenshots/postman-api-gateway-health-check.png`
+
 ## 👤 Author
 **Vishal Attri**  
 Cloud & Backend Enthusiast  

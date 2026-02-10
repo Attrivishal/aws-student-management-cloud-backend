@@ -1,64 +1,93 @@
-# System Architecture Documentation
+# System Architecture
 
-This folder documents the architectural design of the
-**AWS Student Management Cloud Backend** project.
+This folder contains the architectural diagrams for the **AWS Student Management Cloud Backend** project.  
+These diagrams explain how different AWS services and backend components interact with each other in a secure and scalable way.
 
-The goal of this architecture was to design a **secure, scalable, and production-aligned**
-backend system using AWS-managed services while following cloud best practices.
-
----
-
-## Architectural Goals
-
-The system was designed with the following objectives:
-
-- Keep the database isolated from the public internet
-- Separate compute, networking, and data layers
-- Support both serverless (Lambda) and server-based (EC2) workloads
-- Enable observability and debugging through CloudWatch
-- Follow least-privilege security principles
+The architecture was designed with a focus on:
+- Secure networking
+- Controlled database access
+- Separation of concerns between services
+- Real-world cloud backend practices
 
 ---
 
-## Diagram Breakdown
+## 1. System Architecture Diagram
 
-### 1. System Architecture Diagram
+**File:** `01-system-architecture.png`
 
-This diagram shows the complete system at a high level:
+This diagram represents the overall high-level architecture of the project.
 
-- Client requests enter through **API Gateway**
-- Requests are routed to:
-  - AWS Lambda functions for lightweight operations
-  - EC2-hosted Flask backend for traditional service patterns
-- All data access is handled through **PostgreSQL RDS** hosted in private subnets
+### Components involved:
+- Client (Browser / Postman)
+- Amazon API Gateway
+- AWS Lambda Functions
+- EC2 Instance (Flask Backend)
+- Amazon RDS (PostgreSQL)
+- Amazon VPC (Public & Private Subnets)
 
-This hybrid approach demonstrates real-world architectures where
-serverless and EC2-based systems coexist.
+### Flow overview:
+- Client requests are sent either to:
+  - API Gateway (for Lambda-based APIs), or
+  - EC2 public IP (for Flask backend APIs)
+- Lambda functions and EC2 communicate with the PostgreSQL database hosted on Amazon RDS
+- The database remains isolated inside private subnets
 
----
-
-### 2. Network Flow Diagram
-
-The network flow diagram explains how traffic moves securely through the system:
-
-- Public internet traffic is allowed only to API Gateway and EC2
-- Lambda functions operate inside the VPC using private networking
-- RDS accepts traffic only from trusted security groups
-- No direct internet access to the database is possible
-
-This design prevents common security misconfigurations such as
-publicly exposed databases.
+This diagram gives a complete bird’s-eye view of the system.
 
 ---
 
-### 3. Security Design Diagram
+## 2. Network Flow Diagram
 
-The security design focuses on defense-in-depth:
+**File:** `02-network-flow.png`
 
-- Security Groups enforce strict inbound rules
-- IAM Roles are used instead of static credentials
-- Network boundaries isolate sensitive resources
-- CloudWatch logging enables auditing and troubleshooting
+This diagram explains how network traffic flows inside the AWS VPC.
 
-These controls collectively reduce the attack surface
-and align with production security standards.
+### Key networking concepts shown:
+- VPC with public and private subnets
+- EC2 instance deployed in a public subnet
+- RDS PostgreSQL deployed in private subnets
+- Security Group–based communication
+
+### Network flow:
+1. Client sends request to API Gateway or EC2
+2. API Gateway invokes Lambda functions
+3. Lambda functions access RDS using private network routing
+4. EC2 accesses RDS via security group rules
+5. RDS never exposes a public endpoint
+
+This diagram highlights how backend services securely access the database without exposing it to the internet.
+
+---
+
+## 3. Security Design Diagram
+
+**File:** `03-security-design.png`
+
+This diagram focuses on security controls applied across the system.
+
+### Security mechanisms used:
+- RDS deployed in private subnets
+- No public access to PostgreSQL
+- Security groups restricting inbound traffic
+- IAM roles used for Lambda execution
+- Environment variables used for database credentials
+- CORS enabled only at backend level where required
+
+### Security goals achieved:
+- Database isolation
+- Least-privilege access
+- Controlled service-to-service communication
+- No hardcoded secrets in application code
+
+This diagram demonstrates how security was intentionally designed, not added later.
+
+---
+
+## Why These Diagrams Matter
+
+These architectural diagrams document:
+- How the system was planned before implementation
+- How AWS services were connected in a real-world scenario
+- How networking and security were handled professionally
+
+They serve as technical documentation for anyone reviewing or extending the project.

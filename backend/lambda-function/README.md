@@ -22,3 +22,16 @@ and is exposed via API Gateway.
 - Lambda functions run inside the same VPC as RDS
 - Database access is controlled using security groups
 - psycopg2 is used via a Lambda Layer
+
+
+
+## Execution Proof
+
+The following screenshots shows a successful lambda execution connecting to a postgreSQL RDS instance inside a private subnet.
+
+-> Database connection established
+-> Student count fetched in real time
+-> Execution latency measured
+
+see:
+`screenshots/lambda-health-check-success.png`
