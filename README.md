@@ -3,14 +3,7 @@
 ## 📌 Project Overview
 This project is a cloud-native backend system built on AWS to manage and monitor student data using a secure, scalable, and production-style architecture.
 
-It demonstrates how modern backend systems are designed using AWS Lambda, API Gateway, Amazon RDS (PostgreSQL), EC2, IAM, and VPC networking.
-
-The project focuses on real-world engineering problems such as:
-- Secure database access
-- Serverless API design
-- Private networking
-- Monitoring and health checks
-- Cloud logging and debugging
+It demonstrates how modern backend systems are designed using AWS Lambda, API Gateway, Amazon RDS (PostgreSQL), EC2, IAM, and VPC networking, focusing on security, private networking, and observability.
 
 ## 🎯 Problem Statement
 In real-world applications, backend systems must:
@@ -19,30 +12,35 @@ In real-world applications, backend systems must:
 - Handle failures gracefully
 - Provide health and monitoring endpoints
 - Be scalable and cost-efficient
+- Operate inside private networks
+- Enable effective debugging and monitoring
 
 This project solves these challenges using AWS-managed services and best practices.
 
 ## 🏗️ High-Level Architecture
+
 **Request Flow:**
 Client
-↓
-API Gateway (REST API)
-↓
-AWS Lambda (Serverless backend)
-↓
-Amazon RDS (PostgreSQL) – Private Subnet
+├──> API Gateway
+│ └──> AWS Lambda (inside VPC)
+│ └──> Amazon RDS (PostgreSQL - Private Subnet)
+│
+└──> EC2 (Flask Backend)
+└──> Amazon RDS (PostgreSQL - Private Subnet)
 
+text
 
-**Key architectural decisions:**
-- RDS runs in private subnets
-- Lambda connects to RDS via VPC
-- API Gateway exposes controlled endpoints
+**Key Architectural Decisions:**
+- RDS runs only in private subnets
+- Lambda is attached to VPC for database access
+- API Gateway exposes controlled public endpoints
 - IAM roles manage permissions (no hardcoded secrets)
+- EC2 Flask backend validates direct database connectivity
 
 ## 🧱 Technology Stack
 - **Cloud Provider**: AWS
 - **Compute**: AWS Lambda, EC2
-- **API Layer**: Amazon API Gateway
+- **API Layer**: Amazon API Gateway (REST)
 - **Database**: Amazon RDS (PostgreSQL)
 - **Networking**: VPC, Private & Public Subnets, Security Groups
 - **Monitoring**: Amazon CloudWatch
@@ -76,73 +74,115 @@ aws-student-management-cloud-backend/
 ├── diagrams/
 │ └── aws-architecture.png
 │
+├── screenshots/
+│ └── (deployment & API proof images)
+│
 └── README.md
 
-## 🔐 Security Design
-- Database hosted in private subnets
-- No public access to RDS
-- Lambda accesses RDS via VPC + Security Groups
-- IAM roles used instead of static credentials
-- API Gateway controls external access
+text
 
-## 🔄 Features Implemented
-✅ Student count retrieval using AWS Lambda  
-✅ Database health check API  
-✅ API Gateway integration  
-✅ CloudWatch logging enabled  
-✅ Secure VPC networking  
-✅ PostgreSQL schema design  
-✅ EC2-hosted Flask backend validation  
+## ⚙️ Environment Configuration
+```bash
+DB_HOST=your-rds-endpoint
+DB_NAME=your_database_name
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_PORT=5432
+🔐 Security Design
+PostgreSQL hosted in private subnets
 
-## 📊 Monitoring & Observability
-- Lambda execution logs in CloudWatch
-- API Gateway access logs
-- Latency and invocation metrics
-- Error tracking for failed DB connections
+No public access to RDS
 
-## 🧠 What I Learned From This Project
-- Designing secure AWS VPC architectures
-- Connecting Lambda to private RDS instances
-- Debugging real cloud networking issues
-- API Gateway error handling (500, auth, routing)
-- CloudWatch logging and tracing
-- Difference between serverless and server-based backends
-- Real-world IAM role usage
+Lambda and EC2 access RDS via security groups
 
-## 🚀 Why This Project Is Industry-Ready
-- Uses production-like AWS architecture
-- Follows least-privilege security
-- Separates concerns (API, DB, compute)
-- Scalable and cost-efficient design
-- Fully cloud-native
+IAM roles used for permissions (no secrets in code)
 
-## 🔮 Future Enhancements
-- Authentication using Amazon Cognito
-- CI/CD with GitHub Actions
-- Infrastructure as Code (Terraform)
-- Read replicas for RDS
-- Rate limiting and WAF
-- Frontend integration
+API Gateway controls all public access
 
-## Live Execution Proof 
+Follows least-privilege security principles
 
-THis project is fully deployed and tested on AWS. 
-Here are some real screenshots proving live connectivity between API Gateway, AWS Lambda, EC2, and RDS PostgreSQL.
-And all the screenshots are available in the `screenshots/` directory.
+🔄 Features Implemented
+✅ Student count retrieval using AWS Lambda
+✅ Database health check API
+✅ API Gateway → Lambda integration
+✅ CloudWatch logging for Lambda & API Gateway
+✅ Secure VPC networking
+✅ PostgreSQL schema design
+✅ EC2-hosted Flask backend validation
 
-## API Testing (Postman)
+📊 Monitoring & Observability
+Lambda execution logs in CloudWatch
 
-The API Gateway endpoints were tested using postman to verify real-time connectivity between external clients and backend services.
+API Gateway access logs
 
-The Screenshot below demonstrates:
--> Successful API Gateway invocation
--> AWS Lambda execution inside VPC
--> Live Data fetched form PostgreSQL RDS
+Latency and invocation metrics
 
-see:
-`screenshots/postman-api-gateway-health-check.png`
+Error tracking for database connectivity issues
 
-## 👤 Author
-**Vishal Attri**  
-Cloud & Backend Enthusiast  
-LinkedIn: https://www.linkedin.com/in/vishalattri/
+Real-time troubleshooting capabilities
+
+🧪 Live Execution Proof
+This project was fully deployed and tested on AWS in a live environment. All screenshots demonstrating connectivity between services are available in the screenshots/ directory.
+
+🔍 API Testing (Postman)
+The API Gateway endpoints were tested using Postman to verify real-time connectivity between external clients and backend services.
+
+Verified:
+
+✅ Successful API Gateway responses
+
+✅ Lambda execution inside private VPC
+
+✅ Live data fetched from PostgreSQL RDS
+
+See: screenshots/postman-api-gateway-health-check.png
+
+🧠 What I Learned From This Project
+Designing secure AWS VPC architectures
+
+Connecting Lambda to private RDS instances
+
+Debugging real cloud networking and IAM issues
+
+API Gateway routing and error handling
+
+CloudWatch logging and tracing
+
+Differences between serverless and server-based backends
+
+Real-world IAM role usage
+
+🚀 Why This Project Is Industry-Ready
+Uses production-style AWS architecture
+
+Follows least-privilege security principles
+
+Clear separation of concerns (API, compute, database)
+
+Scalable and cost-efficient design
+
+Fully cloud-native deployment
+
+Comprehensive monitoring and observability
+
+🔮 Future Enhancements
+Authentication using Amazon Cognito
+
+CI/CD with GitHub Actions
+
+Infrastructure as Code (Terraform)
+
+Read replicas for RDS
+
+Rate limiting and AWS WAF
+
+Frontend integration
+
+Auto-scaling policies
+
+Disaster recovery setup
+
+👤 Author
+Vishal Attri
+Cloud Engineering Enthusiast
+🔗 LinkedIn: https://www.linkedin.com/in/vishalattri/
