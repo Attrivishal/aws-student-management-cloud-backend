@@ -21,19 +21,18 @@ This project solves these challenges using AWS-managed services and best practic
 
 **Request Flow:**
 Client
-├──> API Gateway
-│ └──> AWS Lambda (inside VPC)
-│ └──> Amazon RDS (PostgreSQL - Private Subnet)
-│
-└──> EC2 (Flask Backend)
-└──> Amazon RDS (PostgreSQL - Private Subnet)
+↓
+API Gateway (REST API)
+↓
+AWS Lambda (Serverless backend)
+↓
+Amazon RDS (PostgreSQL) – Private Subnet
 
-text
 
-**Key Architectural Decisions:**
-- RDS runs only in private subnets
-- Lambda is attached to VPC for database access
-- API Gateway exposes controlled public endpoints
+**Key architectural decisions:**
+- RDS runs in private subnets
+- Lambda connects to RDS via VPC
+- API Gateway exposes controlled endpoints
 - IAM roles manage permissions (no hardcoded secrets)
 - EC2 Flask backend validates direct database connectivity
 
@@ -79,36 +78,21 @@ aws-student-management-cloud-backend/
 │
 └── README.md
 
-text
+## 🔐 Security Design
+- Database hosted in private subnets
+- No public access to RDS
+- Lambda accesses RDS via VPC + Security Groups
+- IAM roles used instead of static credentials
+- API Gateway controls external access
 
-## ⚙️ Environment Configuration
-```bash
-DB_HOST=your-rds-endpoint
-DB_NAME=your_database_name
-DB_USER=postgres
-DB_PASSWORD=your_password
-DB_PORT=5432
-🔐 Security Design
-PostgreSQL hosted in private subnets
-
-No public access to RDS
-
-Lambda and EC2 access RDS via security groups
-
-IAM roles used for permissions (no secrets in code)
-
-API Gateway controls all public access
-
-Follows least-privilege security principles
-
-🔄 Features Implemented
-✅ Student count retrieval using AWS Lambda
-✅ Database health check API
-✅ API Gateway → Lambda integration
-✅ CloudWatch logging for Lambda & API Gateway
-✅ Secure VPC networking
-✅ PostgreSQL schema design
-✅ EC2-hosted Flask backend validation
+## 🔄 Features Implemented
+✅ Student count retrieval using AWS Lambda  
+✅ Database health check API  
+✅ API Gateway integration  
+✅ CloudWatch logging enabled  
+✅ Secure VPC networking  
+✅ PostgreSQL schema design  
+✅ EC2-hosted Flask backend validation  
 
 📊 Monitoring & Observability
 Lambda execution logs in CloudWatch
@@ -152,37 +136,40 @@ Differences between serverless and server-based backends
 
 Real-world IAM role usage
 
-🚀 Why This Project Is Industry-Ready
-Uses production-style AWS architecture
+## 🚀 Why This Project Is Industry-Ready
+- Uses production-like AWS architecture
+- Follows least-privilege security
+- Separates concerns (API, DB, compute)
+- Scalable and cost-efficient design
+- Fully cloud-native
 
-Follows least-privilege security principles
+## 🔮 Future Enhancements
+- Authentication using Amazon Cognito
+- CI/CD with GitHub Actions
+- Infrastructure as Code (Terraform)
+- Read replicas for RDS
+- Rate limiting and WAF
+- Frontend integration
 
-Clear separation of concerns (API, compute, database)
+## Live Execution Proof 
 
-Scalable and cost-efficient design
+THis project is fully deployed and tested on AWS. 
+Here are some real screenshots proving live connectivity between API Gateway, AWS Lambda, EC2, and RDS PostgreSQL.
+And all the screenshots are available in the `screenshots/` directory.
 
-Fully cloud-native deployment
+## API Testing (Postman)
 
-Comprehensive monitoring and observability
+The API Gateway endpoints were tested using postman to verify real-time connectivity between external clients and backend services.
 
-🔮 Future Enhancements
-Authentication using Amazon Cognito
+The Screenshot below demonstrates:
+-> Successful API Gateway invocation
+-> AWS Lambda execution inside VPC
+-> Live Data fetched form PostgreSQL RDS
 
-CI/CD with GitHub Actions
+see:
+`screenshots/postman-api-gateway-health-check.png`
 
-Infrastructure as Code (Terraform)
-
-Read replicas for RDS
-
-Rate limiting and AWS WAF
-
-Frontend integration
-
-Auto-scaling policies
-
-Disaster recovery setup
-
-👤 Author
-Vishal Attri
-Cloud Engineering Enthusiast
-🔗 LinkedIn: https://www.linkedin.com/in/vishalattri/
+## 👤 Author
+**Vishal Attri**  
+Cloud & Backend Enthusiast  
+LinkedIn: https://www.linkedin.com/in/vishalattri/
