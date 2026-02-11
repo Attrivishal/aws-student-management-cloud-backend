@@ -171,5 +171,5 @@ see:
 
 ## 👤 Author
 **Vishal Attri**  
-Cloud & Backend Enthusiast  
+Cloud  Enthusiast  
 LinkedIn: https://www.linkedin.com/in/vishalattri/
