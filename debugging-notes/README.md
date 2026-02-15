@@ -12,3 +12,4 @@ So, actuallt these notes reflects real-world backend and cloud debugging experie
 Most issues were related to **AWS networking and security configuration**, not
 application code. These notes reflect real-world challenges encountered while
 working with VPCs, subnets, security groups, EC2, Lambda, and RDS PostgreSQL.
+

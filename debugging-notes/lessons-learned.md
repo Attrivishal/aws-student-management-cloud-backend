@@ -19,7 +19,7 @@ One of the biggest takeaways from this project was understanding IAM roles:
 - Every AWS service requires explicit permissions
 - Lambda cannot access VPC or CloudWatch without an execution role
 - EC2 should use instance roles instead of access keys
-- Permissions must be granted intentionally and minimally
+- Permissions must be granted intentionally and minimally and this is must.
 - Missing IAM roles can look like network or application failures
 
 This project made me comfortable working with IAM in real scenarios, not just theory.
