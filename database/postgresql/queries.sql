@@ -1,6 +1,10 @@
 -- queries.sql
 -- SQL queries used by backend services
 
+--  Here i used a simple students table for demonstration purposes. You can replace it with your actual table and fields.
+
+--Using PostgreSQL syntax for creating a students table
+
 -- Insert a new student
 INSERT INTO students (name, email, course)
 VALUES ('Vishal Attri', 'vishal@example.com', 'Cloud Computing');
