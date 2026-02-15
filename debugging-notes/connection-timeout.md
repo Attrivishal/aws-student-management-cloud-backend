@@ -21,4 +21,4 @@ This file explains the **most frequent issue I faced** during this project.
 - Confirmed subnet routing and VPC association.
 
 This issue helped me understand that **most cloud failures are networking-related,
-not code-related**.
+not code-related so we have to configure or fix them**.
